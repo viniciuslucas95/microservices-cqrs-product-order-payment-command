@@ -3,6 +3,7 @@ import PayProductOrderCommand from './PayProductOrderCommand';
 import CommandQueryHandlerBase from '../../shared/CommandQueryHandlerBase';
 import ProductOrderPaymentEntity from '../../../domain/entities/ProductOrderPaymentEntity';
 import PayProductOrderDto from './PayProductOrderDto';
+import ProductOrderPaymentUpdateEvent from './ProductOrderPaymentUpdateEvent';
 
 export default class PayProductOrderCommandHandler
   extends CommandQueryHandlerBase
@@ -11,11 +12,19 @@ export default class PayProductOrderCommandHandler
   async handle(data: PayProductOrderCommand): Promise<PayProductOrderDto> {
     const entity = ProductOrderPaymentEntity.create(data.orderId);
 
-    const repository = this.registry.get('productOrderPaymentRepository');
+    // In a real scenario it wouldn't work like this, it's just for example purposes.
+    const service = this.registry.get('productOrderPaymentService');
+    await service.handle(entity);
 
+    const repository = this.registry.get('productOrderPaymentRepository');
     await repository.createOrUpdate(entity);
 
-    // Emit an event
+    const event = new ProductOrderPaymentUpdateEvent(
+      entity.orderId,
+      entity.status,
+    );
+    const queue = this.registry.get('productOrderPaymentUpdatePublisher');
+    await queue.publish(event);
 
     return new PayProductOrderDto(entity.id);
   }

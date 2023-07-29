@@ -40,6 +40,10 @@ const registry = new Registry(
   databaseUsernameEnv,
   databasePasswordEnv,
   databaseNameEnv,
+  messageBrokerHostEnv,
+  messageBrokerPort,
+  messageBrokerUsernameEnv,
+  messageBrokerPasswordEnv,
 );
 
 new ProductOrderedExchangeConsumer(

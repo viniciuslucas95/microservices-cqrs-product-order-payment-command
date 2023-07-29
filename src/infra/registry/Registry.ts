@@ -4,6 +4,8 @@ import Logger from '../logger/Logger';
 import IRegistry, { Registries } from './IRegistry';
 import PayProductOrderCommandHandler from '../../application/product-order-payment/pay/PayProductOrderCommandHandler';
 import ProductOrderPaymentRepository from '../repository/product-order-payment/ProductOrderPaymentRepository';
+import ProductOrderPaymentUpdatePublisher from '../queue/product-order-payment/ProductOrderPaymentUpdatePublisher';
+import ProductOrderPaymentService from '../payment/ProductOrderPaymentService';
 
 export default class Registry implements IRegistry {
   private readonly _singletons: Registries;
@@ -14,6 +16,10 @@ export default class Registry implements IRegistry {
     databaseUsername = 'admin',
     databasePassword = 'admin',
     databaseName = 'dev',
+    messageBrokerHost?: string,
+    messageBrokerPort?: number,
+    messageBrokerUsername?: string,
+    messageBrokerPassword?: string,
   ) {
     this._singletons = {
       logger: new Logger(),
@@ -27,6 +33,14 @@ export default class Registry implements IRegistry {
           database: databaseName,
         }),
       ),
+      productOrderPaymentUpdatePublisher:
+        new ProductOrderPaymentUpdatePublisher(
+          messageBrokerHost,
+          messageBrokerPort,
+          messageBrokerUsername,
+          messageBrokerPassword,
+        ),
+      productOrderPaymentService: new ProductOrderPaymentService(),
     };
   }
 
