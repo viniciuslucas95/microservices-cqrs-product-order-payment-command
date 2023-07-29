@@ -1,14 +1,14 @@
 import ILogger from '../logger/ILogger';
 import IPayProductOrderCommandHandler from '../../application/product-order-payment/pay/IPayProductOrderCommandHandler';
 import IProductOrderPaymentRepository from '../../application/product-order-payment/IProductOrderPaymentRepository';
-import IProductOrderPaymentUpdatePublisher from '../../application/product-order-payment/pay/IProductOrderPaymentUpdatePublisher';
+import IProductOrderPaymentUpdateExchangePublisher from '../../application/product-order-payment/pay/IProductOrderPaymentUpdateExchangePublisher';
 import IProductOrderPaymentService from '../payment/IProductOrderPaymentService';
 
 export type Registries = {
   logger: ILogger;
   payProductOrderCommandHandler: IPayProductOrderCommandHandler;
   productOrderPaymentRepository: IProductOrderPaymentRepository;
-  productOrderPaymentUpdatePublisher: IProductOrderPaymentUpdatePublisher;
+  productOrderPaymentUpdateExchangePublisher: IProductOrderPaymentUpdateExchangePublisher;
   productOrderPaymentService: IProductOrderPaymentService;
 };
 

@@ -1,9 +1,9 @@
 import amqp, { Channel } from 'amqplib';
 
-import IExchangeConsumer from './IExchangeConsumer';
+import IQueueConsumer from './IQueueConsumer';
 
-export default abstract class ExchangeConsumerBase<T extends object>
-  implements IExchangeConsumer
+export default abstract class QueueConsumerBase<T extends object>
+  implements IQueueConsumer
 {
   protected constructor(
     public readonly name: string,

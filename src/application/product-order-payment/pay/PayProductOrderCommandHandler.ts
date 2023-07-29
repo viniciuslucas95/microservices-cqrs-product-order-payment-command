@@ -23,7 +23,9 @@ export default class PayProductOrderCommandHandler
       entity.orderId,
       entity.status,
     );
-    const queue = this.registry.get('productOrderPaymentUpdatePublisher');
+    const queue = this.registry.get(
+      'productOrderPaymentUpdateExchangePublisher',
+    );
     await queue.publish(event);
 
     return new PayProductOrderDto(entity.id);

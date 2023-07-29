@@ -1,10 +1,10 @@
 import ProductOrderedEvent from '../../../application/product-order-payment/pay/ProductOrderedEvent';
-import ExchangeConsumerBase from '../shared/ExchangeConsumerBase';
+import QueueConsumerBase from '../shared/QueueConsumerBase';
 import IRegistry from '../../registry/IRegistry';
 import CommandQueryBase from '../../../application/shared/CommandQueryBase';
 import PayProductOrderCommand from '../../../application/product-order-payment/pay/PayProductOrderCommand';
 
-export default class ProductOrderedExchangeConsumer extends ExchangeConsumerBase<ProductOrderedEvent> {
+export default class ProductOrderedQueueConsumer extends QueueConsumerBase<ProductOrderedEvent> {
   constructor(
     private readonly registry: IRegistry,
     host?: string,
@@ -14,7 +14,7 @@ export default class ProductOrderedExchangeConsumer extends ExchangeConsumerBase
   ) {
     super(
       'ProductOrdered',
-      'Payment',
+      'PaymentRequest',
       'fanout',
       host,
       port,

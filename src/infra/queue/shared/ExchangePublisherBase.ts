@@ -1,4 +1,4 @@
-import amqp, { Channel } from 'amqplib';
+import amqp, { ConfirmChannel } from 'amqplib';
 
 import IExchangePublisher from './IExchangePublisher';
 
@@ -15,24 +15,40 @@ export default abstract class ExchangePublisherBase<T extends object>
   ) {}
 
   public async publish(data: T, queue = '') {
-    const stringfiedData = JSON.stringify(data);
-    const buffer = Buffer.from(stringfiedData, 'utf8');
+    const stringifiedData = JSON.stringify(data);
+    const buffer = Buffer.from(stringifiedData, 'utf8');
 
-    await this.withChannel((channel) => {
-      channel.publish(this.name, queue, buffer);
+    await this.withChannel(async (channel) => {
+      await new Promise<void>((resolve, reject) => {
+        channel.publish(
+          this.name,
+          queue,
+          buffer,
+          { mandatory: true, persistent: true },
+          (err) => {
+            if (err) {
+              reject();
+              return;
+            }
+
+            resolve();
+          },
+        );
+      });
     });
   }
 
-  private async withChannel(exec: (channel: Channel) => void) {
+  private async withChannel(exec: (channel: ConfirmChannel) => Promise<void>) {
     const url = `amqp://${this.username}:${this.password}@${this.host}:${this.port}`;
+
     const connection = await amqp.connect(url);
-    const channel = await connection.createChannel();
+    const channel = await connection.createConfirmChannel();
 
     await channel.assertExchange(this.name, this.type, {
       durable: true,
     });
 
-    exec(channel);
+    await exec(channel);
 
     await connection.close();
   }

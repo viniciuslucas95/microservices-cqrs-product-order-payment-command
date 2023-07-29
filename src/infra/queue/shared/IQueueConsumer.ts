@@ -1,4 +1,4 @@
-export default interface IExchangeConsumer {
+export default interface IQueueConsumer {
   name: string;
   queueName: string;
 

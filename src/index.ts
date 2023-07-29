@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import dotenv from 'dotenv';
 
 import Registry from './infra/registry/Registry';
-import ProductOrderedExchangeConsumer from './infra/queue/product-order/ProductOrderedExchangeConsumer';
+import ProductOrderedQueueConsumer from './infra/queue/product-order/ProductOrderedQueueConsumer';
 
 dotenv.config();
 
@@ -46,7 +46,7 @@ const registry = new Registry(
   messageBrokerPasswordEnv,
 );
 
-new ProductOrderedExchangeConsumer(
+new ProductOrderedQueueConsumer(
   registry,
   messageBrokerHostEnv,
   messageBrokerPort,

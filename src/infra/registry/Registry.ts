@@ -4,7 +4,7 @@ import Logger from '../logger/Logger';
 import IRegistry, { Registries } from './IRegistry';
 import PayProductOrderCommandHandler from '../../application/product-order-payment/pay/PayProductOrderCommandHandler';
 import ProductOrderPaymentRepository from '../repository/product-order-payment/ProductOrderPaymentRepository';
-import ProductOrderPaymentUpdatePublisher from '../queue/product-order-payment/ProductOrderPaymentUpdatePublisher';
+import ProductOrderPaymentUpdateExchangePublisher from '../queue/product-order-payment/ProductOrderPaymentUpdateExchangePublisher';
 import ProductOrderPaymentService from '../payment/ProductOrderPaymentService';
 
 export default class Registry implements IRegistry {
@@ -33,8 +33,8 @@ export default class Registry implements IRegistry {
           database: databaseName,
         }),
       ),
-      productOrderPaymentUpdatePublisher:
-        new ProductOrderPaymentUpdatePublisher(
+      productOrderPaymentUpdateExchangePublisher:
+        new ProductOrderPaymentUpdateExchangePublisher(
           messageBrokerHost,
           messageBrokerPort,
           messageBrokerUsername,

@@ -1,10 +1,10 @@
 import ExchangePublisherBase from '../shared/ExchangePublisherBase';
 import ProductOrderPaymentUpdateEvent from '../../../application/product-order-payment/pay/ProductOrderPaymentUpdateEvent';
-import IProductOrderPaymentUpdatePublisher from '../../../application/product-order-payment/pay/IProductOrderPaymentUpdatePublisher';
+import IProductOrderPaymentUpdateExchangePublisher from '../../../application/product-order-payment/pay/IProductOrderPaymentUpdateExchangePublisher';
 
-export default class ProductOrderPaymentUpdatePublisher
+export default class ProductOrderPaymentUpdateExchangePublisher
   extends ExchangePublisherBase<ProductOrderPaymentUpdateEvent>
-  implements IProductOrderPaymentUpdatePublisher
+  implements IProductOrderPaymentUpdateExchangePublisher
 {
   constructor(
     host?: string,
@@ -12,13 +12,6 @@ export default class ProductOrderPaymentUpdatePublisher
     username?: string,
     password?: string,
   ) {
-    super(
-      'ProductOrderPaymentUpdate',
-      'fanout',
-      host,
-      port,
-      username,
-      password,
-    );
+    super('ProductOrderPayment', 'fanout', host, port, username, password);
   }
 }
