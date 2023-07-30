@@ -9,7 +9,7 @@ export default abstract class QueueConsumerBase<T extends object>
     public readonly name: string,
     public readonly queueName: string,
     private readonly type = 'fanout',
-    private readonly host = 'localhost',
+    private readonly host = 'rabbitmq',
     private readonly port = 5672,
     private readonly username = 'guest',
     private readonly password = 'guest',

@@ -11,8 +11,8 @@ export default class Registry implements IRegistry {
   private readonly _singletons: Registries;
 
   constructor(
-    databaseHost = 'localhost',
-    databasePort = 5434,
+    databaseHost = 'postgres-product-order-payment-command',
+    databasePort = 5432,
     databaseUsername = 'admin',
     databasePassword = 'admin',
     databaseName = 'dev',
